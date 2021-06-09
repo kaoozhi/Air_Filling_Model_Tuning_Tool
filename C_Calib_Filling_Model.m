@@ -138,7 +138,6 @@ OF(isnan(OF)) = 0;
 %% To do: Define maximum iteration number
 max_iter=100;
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% To do: Define breakpoints
 VVTvar_min = 5; % minimum number of VVT variations for alpha computation
 nb_iter=1;
 avg_error_OF_old = 1e6;

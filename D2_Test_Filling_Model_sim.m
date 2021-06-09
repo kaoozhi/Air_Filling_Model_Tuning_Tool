@@ -26,7 +26,7 @@ Cnx_cyl_fill_ex_mfld_prs_cor_cho = 0;
 for k = 1: length(data_list)
     
     Data = load(['Input_data/DataBase/' data_list{k} '.mat']);
-
+    
     var_names= fieldnames(Data);
     for i=1:length(var_names)
         
@@ -35,11 +35,11 @@ for k = 1: length(data_list)
     end
     
     Input.N_rpm = Data_rep.N; % rpm
-%     Input.Pman_kPa = Data_rep.P_A_COL/10; % kPa
+    %     Input.Pman_kPa = Data_rep.P_A_COL/10; % kPa
     Input.Pman_kPa = Data_rep.MAP; % kPa
     
     try
-%         Input.Patm_kPa = Data_rep.BARO/10;
+        %         Input.Patm_kPa = Data_rep.BARO/10;
         Input.Patm_kPa = Data_rep.AMPECU;
     catch
         Input.Patm_kPa = ones(size(Input.N_rpm))*101.3;
@@ -52,9 +52,9 @@ for k = 1: length(data_list)
     end
     
     try
-    Input.Vxx_cyl_pump_flow_sw = Data_rep.CYLPUMPFLW;
+        Input.Vxx_cyl_pump_flow_sw = Data_rep.CYLPUMPFLW;
     catch
-    Input.Vxx_cyl_pump_flow_sw = Data_rep.N*0;
+        Input.Vxx_cyl_pump_flow_sw = Data_rep.N*0;
     end
     
     
@@ -69,42 +69,39 @@ for k = 1: length(data_list)
     catch
         Input.Tco_degC = ones(size(Input.N_rpm))*90;
     end
-
+    
     Cbx_cyl_fill_efy_opt_cho = true;
     ipoint=(0:1:length(Input.N_rpm)-1)';
     dt = 1;
-
+    
     sim('Test_Model_HR12_2016.slx')
-
+    
     figure(k)
-
+    
     set(gcf,'position',[0 0 1600 450],'PaperPositionMode','auto');
- 
+    
     Masp_mes = downsample(Data_rep.QAMGC,10);
-
+    
     Masp_IFP=downsample(double(Masp_mdl(2:end-1,1)),10);
     
     Masp_vect(k).mes= Masp_mes;
     Masp_vect(k).est= Masp_IFP;
-
+    
     subplot(1,5,1)
     analysis_plot(Masp_IFP,Masp_mes,name_list{k},k);
-
+    
     subplot(1,5,[2,3 4])
     EngineMap(Data.N, Data.MAP,Masp_IFP,Masp_mes,'MDL\_IFP');
-
+    
     subplot(1,5,5)
     histerr(Masp_IFP, Masp_mes,'MDL\_IFP');
     
-    
-    tt = ['Figures/Investigation_2764_cal_0318/' strrep(name_list{k}, '/', '_')];
-%     save_figs(tt);
-%     subplot(1,3,1)
-%     analysis_plot(Masp_IFP,Masp_mes,name_list{k},k);
-% 
-%     subplot(1,3,[2,3])
-%     EngineMap(Data.N, Data.MAP,Masp_IFP,Masp_mes,'MDL\_IFP');
-    
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    %% To do: uncomment following codes to define path and save figures if needed
+    %     fig_path = 'Figures/Cal_0318/';
+    %     tt = [fig_path strrep(name_list{k}, '/', '_')];
+    %     save_figs(tt);
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     
     clear Data_rep
 end
@@ -113,16 +110,16 @@ end
 figure(k+1)
 set(gcf,'position',[0 0 1600 450],'PaperPositionMode','auto');
 for j=1:length(name_list)
-
+    
     % Get the width and height of the figure
     lbwh = get(1, 'position');
     figw = lbwh(3);
     figh = lbwh(4);
-
+    
     % Number of rows and columns of axes
     ncols = length(name_list);
     nrows = 1;
-
+    
     % w and h of each axis in normalized units
     axisw = (1-0.1)/ncols;
     axish = (1 / nrows);
@@ -135,7 +132,7 @@ for j=1:length(name_list)
     h=subplot(1,length(name_list),j);
     set(h, 'position', [axisl, axisb, axisw*0.8, axish*0.7]);
     analysis_plot(Masp_vect(j).est,Masp_vect(j).mes,name_list{j},j);
-
+    
 end
 legend('MDL\_IFP','Location','Southeast')
 
