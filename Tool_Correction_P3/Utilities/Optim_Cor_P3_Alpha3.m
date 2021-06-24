@@ -41,7 +41,7 @@ masp_est_new= mivc_bas - movlp_bas -max(0,mevc_bas.*((prs_ratio-1).*new_z+1));
 % movlp_bas(movlp_bas_nomi>0) = movlp_bas_nomi(movlp_bas_nomi>0);
 % masp_est_new= mivc_bas - movlp_bas -max(0,mevc_bas.*((prs_ratio-1).*new_z+1));
 
-Launch_sim_cor_alti;
+Launch_Sim_Cor_Alti;
 figure
 surf(x_node,y_node,z_node)
 zlabel('f')

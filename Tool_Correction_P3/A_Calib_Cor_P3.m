@@ -9,7 +9,8 @@ run('Calib_mdl_RSA.m')
 Gen_calib_for_sim;
 
 % data_list = {'Alti/0m/ExportPCMAP_07-05-2021_HR12_BAL11_MC502_65A_0m_20C_ISO_NTQI_EGR_OFF1_filtered_extracted'};
-data_list = {'Alti/HR12_BAL11_MC502_65A_1000_1500_2000_2500m_calib_2500m_valid_conc'};
+% data_list = {'Alti/HR12_BAL14_MC502_65A_1000_1500_2000_2500m_calib_2500m_valid_conc'};
+data_list = {'Alti/2500m/Valid/ExportPCMAP_14-06-2021_HR12_CTL_MC506_65A_0120_2500m_full_rampe_EGRoff'};
 % data_list = {'Alti/2500m/Valid/ExportPCMAP_31-05-2021_HR12_BAL11_MC502_65A_2500m_20C_ISO_NTQI_EGR_off_valid_filtered_extracted'};
 
 % data_list = {'Alti/2500m/Calib/ExportPCMAP_12-05-2021_HR12_BAL11_MC502_65A_2500m_20C_ISO_NTQI_EGR_OFF_1_filtered_extracted',...
@@ -30,7 +31,7 @@ name_list = data_list;
 % load Cal_cor_alti_0527_v2;
 % run('Cal_cor_alti_0602.m')
 % load Cal_cor_alti_0531_cyrille;
-% load Cal_cor_alti_0607;
+load Cal_cor_alti_0607;
 
 for k = 1: length(data_list)
     
@@ -155,7 +156,7 @@ for k = 1: length(data_list)
     
     
     %% Step1: Run simulation w/o correction
-    Launch_sim_cor_alti;
+    Launch_Sim_Cor_Alti;
     err_cyl_flow_base =  err_cyl_flow;
     
     %% Step2: Tune tables and run simulation
@@ -171,7 +172,7 @@ for k = 1: length(data_list)
     
     %% Run simulation w/ tuned values
     Cxm_cyl_fill_mdl_ex_mfld_prs_rat_cor_fac = ones(16);
-    Launch_sim_cor_alti;
+    Launch_Sim_Cor_Alti;
     figure
     surf(Cxb_cyl_fill_eng_spd,Cxb_cyl_fill_intk_mfld_prs, Cxm_cyl_fill_mdl_intk_mfld_prs_diff_cor_fac')
     zlabel('f')

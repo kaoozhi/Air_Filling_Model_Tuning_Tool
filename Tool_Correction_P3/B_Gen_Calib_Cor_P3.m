@@ -1,4 +1,7 @@
-Cal = load('Cal_cor_alti_0607.mat');
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% To do: choose calibration file to load
+Cal = load('Cal_cor_alti_0531.mat');
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 cal_name=fieldnames(Cal);
 for i=1:length(cal_name)
